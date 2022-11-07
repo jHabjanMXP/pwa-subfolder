@@ -5,9 +5,37 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>MXP Test</title>
-    <base href="/mxp-sw-test/" />
-    <link href="manifest.json" rel="manifest" />
-    <link href="styles.css" rel="stylesheet" />
+    
+    <base />
+    <script>
+        // dynamic base href
+        const base = document.getElementsByTagName('base')[0];
+        const currentUrl = window.location.pathname;
+        base.setAttribute('href', currentUrl.endsWith("/") ? currentUrl : (currentUrl + "/"));
+
+        // function to add css href links to head
+        function addCssLink(href, rel = "stylesheet", sizes = null) {
+            const link = document.createElement('link');
+            link.setAttribute('rel', rel);
+            link.setAttribute('href', href);
+            if (sizes) link.setAttribute('sizes', sizes);
+            document.head.appendChild(link);
+        }
+
+        // function to add js src links to body
+        function addJsLink(src) {
+            const script = document.createElement('script');
+            script.setAttribute('src', src);
+            document.body.appendChild(script);
+        }
+        
+    </script>
+    
+    <script>
+        // add all css links to head from above
+        addCssLink('manifest.json', 'manifest');
+        addCssLink('styles.css');
+    </script>
 </head>
 
 <body>
